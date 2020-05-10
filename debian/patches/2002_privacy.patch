@@ -1,0 +1,94 @@
+Description: Avoid privacy breach in documentation
+Forwarded: no
+Author: Jonas Smedegaard <dr@jones.dk>
+Last-Update: 2019-12-02
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/doc/design.md
++++ b/doc/design.md
+@@ -185,7 +185,7 @@
+ 
+ Approximate distribution of floating point register values at the end of each program loop is shown in these figures (left - group F, right - group E):
+ 
+-![Imgur](https://i.imgur.com/64G4qE8.png)
++<https://i.imgur.com/64G4qE8.png>
+ 
+ *(Note: bins are marked by the left-side value of the interval, e.g. bin marked `1e-40` contains values from `1e-40` to `1e-20`.)*
+ 
+@@ -272,7 +272,7 @@
+ 
+ The image below shows an example of the distribution of writes to the Scratchpad. Each pixel in the image represents 8 bytes of the Scratchpad. Red pixels represent portions of the Scratchpad that have been overwritten at least once during hash calculation. The "L1" and "L2" levels are on the left side (almost completely overwritten). The right side of the scratchpad represents the bottom 1792 KiB. Only about 66% of it are overwritten, but the writes are spread uniformly and randomly.
+ 
+-![Imgur](https://i.imgur.com/pRz6aBG.png)
++<https://i.imgur.com/pRz6aBG.png>
+ 
+ See Appendix D for the analysis of Scratchpad entropy.
+ 
+@@ -445,7 +445,7 @@
+ 
+ The following figure shows the distribution of the runtimes of a single VM program (in fast mode). This includes: program generation, JIT compilation, VM execution and Blake2b hash of the register file. Program generation and JIT compilation was measured to take 3.6 μs per program.
+ 
+-![Imgur](https://i.imgur.com/ikv2z2i.png)
++<https://i.imgur.com/ikv2z2i.png>
+ 
+ AMD Ryzen 7 1700 can calculate 625 hashes per second in fast mode (using 1 thread), which means a single hash result takes 1600 μs (1.6 ms). This consists of (approximately):
+ 
+@@ -460,7 +460,7 @@
+ 
+ The following figure shows the distribution of times to calculate 1 hash result using the light mode. Most of the time is spent executing SuperscalarHash to calculate Dataset items (13.2 ms out of 14.8 ms). The average verification time exactly matches the performance of the CryptoNight algorithm.
+ 
+-![Imgur](https://i.imgur.com/VtwwJT8.png)
++<https://i.imgur.com/VtwwJT8.png>
+ 
+ ### D. Scratchpad entropy analysis
+ 
+@@ -477,7 +477,7 @@
+ 
+ The following figure shows the sensitivity of SuperscalarHash to changing a single bit of an input register:
+ 
+-![Imgur](https://i.imgur.com/ztZ0V0G.png)
++<https://i.imgur.com/ztZ0V0G.png>
+ 
+ This shows that SuperscalaHash has quite low sensitivity to high-order bits and somewhat decreased sensitivity to the lowest-order bits. Sensitivity is highest for bits 3-53 (inclusive).
+ 
+--- a/doc/specs.md
++++ b/doc/specs.md
+@@ -283,11 +283,7 @@
+ 
+ ## 4. Virtual Machine
+ 
+-The components of the RandomX virtual machine are summarized in Fig. 4.1.
+-
+-*Figure 4.1 - Virtual Machine*
+-
+-![Imgur](https://i.imgur.com/Enk42b8.png)
++The components of the RandomX virtual machine are summarized at <https://i.imgur.com/Enk42b8.png>.
+ 
+ The VM is a complex instruction set computer ([CISC](https://en.wikipedia.org/wiki/Complex_instruction_set_computer)). All data are loaded and stored in little-endian byte order. Signed integer numbers are represented using [two's complement](https://en.wikipedia.org/wiki/Two%27s_complement).
+ 
+@@ -464,11 +460,7 @@
+ 
+ ### 5.1 Instruction encoding
+ 
+-Each instruction word is 64 bits long. Instruction fields are encoded as shown in Fig. 5.1.
+-
+-*Figure 5.1 - Instruction encoding*
+-
+-![Imgur](https://i.imgur.com/FtkWRwe.png)
++Each instruction word is 64 bits long. Instruction fields are encoded as shown at <https://i.imgur.com/FtkWRwe.png>.
+ 
+ #### 5.1.1 opcode
+ There are 256 opcodes, which are distributed between 29 distinct instructions. Each instruction can be encoded using multiple opcodes (the number of opcodes specifies the frequency of the instruction in a random program).
+@@ -882,11 +874,7 @@
+ 
+ In order to allow PoW verification with a lower amount of memory, the Dataset is constructed in two steps using an intermediate structure called the "Cache", which can be used to calculate Dataset items on the fly.
+ 
+-The whole Dataset is constructed from the key value `K`, which is an input parameter of RandomX. The whole Dataset needs to be recalculated everytime the key value changes. Fig. 7.1 shows the process of Dataset construction. Note: the maximum supported length of `K` is 60 bytes. Using a longer key results in implementation-defined behavior.
+-
+-*Figure 7.1 - Dataset construction*
+-
+-![Imgur](https://i.imgur.com/86h5SbW.png)
++The whole Dataset is constructed from the key value `K`, which is an input parameter of RandomX. The whole Dataset needs to be recalculated everytime the key value changes. At <https://i.imgur.com/86h5SbW.png> is shown the process of Dataset construction. Note: the maximum supported length of `K` is 60 bytes. Using a longer key results in implementation-defined behavior.
+ 
+ ### 7.1 Cache construction
+ 

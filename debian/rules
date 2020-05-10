@@ -1,0 +1,42 @@
+#!/usr/bin/make -f
+
+DH_OPTIONS = -O--buildsystem=cmake
+
+# generate documentation unless nodoc requested
+DOCS_stem = README doc/design doc/specs
+ifeq (,$(filter nodoc,$(DEB_BUILD_OPTIONS)))
+DOCS = $(foreach d,$(DOCS_stem),$d.html $d.txt)
+endif
+
+# avoid executable stack in assembly code
+export DEB_CFLAGS_MAINT_APPEND = -Wa,--noexecstack
+
+# Let d-shlibs calculate development package dependencies
+#  and handle shared library install
+override_dh_install: $(DOCS)
+	dh_install
+	d-shlibmove --commit \
+		--devunversioned \
+		--exclude-a \
+		--exclude-la \
+		--multiarch \
+		--movedev "debian/tmp/usr/include/*" usr/include/ \
+		debian/tmp/usr/lib/*/*.so
+
+override_dh_missing:
+	dh_missing --fail-missing
+
+override_dh_installdocs:
+	dh_installdocs --all -- $(DOCS)
+
+override_dh_clean:
+	dh_clean -- $(DOCS)
+
+%.html: %.md
+	pandoc --from gfm-raw_html --to html --standalone --output $@ $<
+
+%.txt: %.md
+	pandoc --from gfm-raw_html --to plain --output $@ $<
+
+%:
+	dh $@ --with pkgkde_symbolshelper $(DH_OPTIONS:-O%=%)

@@ -1,0 +1,48 @@
+Source: librandomwow
+Section: libs
+Priority: optional
+Maintainer: qvqc <ridethe@candy.surf>
+Uploaders:
+ qvqc <ridethe@candy.surf>,
+Build-Depends:
+ cmake,
+ d-shlibs,
+ debhelper-compat (= 12),
+ pandoc <!nodoc>,
+ pkg-kde-tools,
+Standards-Version: 4.5.0
+Homepage: https://github.com/wownero/RandomWOW
+Vcs-Git: https://github.com/wownero/RandomWOW.git
+Vcs-Browser: https://github.com/wownero/RandomWOW
+Rules-Requires-Root: no
+
+Package: librandomwow0
+Section: libs
+Architecture: any
+Multi-Arch: same
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends},
+Description: proof of work (PoW) algorithm for CPUs
+ RandomWOW is a proof-of-work (PoW) algorithm
+ that is optimized for general-purpose CPUs.
+ RandomWOW uses random code execution (hence the name)
+ together with several memory-hard techniques
+ to minimize the efficiency advantage of specialized hardware.
+
+Package: librandomwow-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends:
+ librandomx0 (= ${binary:Version}),
+ ${devlibs:Depends},
+ ${misc:Depends},
+Description: proof of work (PoW) algorithm for CPUs - development headers
+ RandomWOW is a proof-of-work (PoW) algorithm
+ that is optimized for general-purpose CPUs.
+ RandomWOW uses random code execution (hence the name)
+ together with several memory-hard techniques
+ to minimize the efficiency advantage of specialized hardware.
+ .
+ This package provides development headers for RandomWOW.

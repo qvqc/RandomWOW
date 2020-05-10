@@ -1,0 +1,144 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: RandomX
+Upstream-Contact: https://github.com/tevador/RandomX/issues
+Source: https://github.com/tevador/RandomX/releases
+
+Files: *
+Copyright:
+  2018-2019, tevador <tevador@gmail.com>
+License: BSD-3-clause
+
+Files:
+ src/argon2.h
+ src/argon2_avx2.c
+ src/argon2_core.c
+ src/argon2_core.h
+ src/argon2_ref.c
+ src/argon2_ssse3.c
+ src/blake2/blake2-impl.h
+ src/blake2/blake2.h
+ src/blake2/blake2b.c
+ src/blake2/blamka-round-avx2.h
+ src/blake2/blamka-round-ref.h
+ src/blake2/blamka-round-ssse3.h
+ src/dataset.cpp
+Copyright:
+  2015, Daniel Dinu
+  2015, Dmitry Khovratovich
+  2015, Jean-Philippe Aumasson
+  2015, Samuel Neves
+  2018-2019, tevador <tevador@gmail.com>
+License-Grant:
+ Original code from Argon2 reference source code package
+ used under CC0 Licence
+ <https://github.com/P-H-C/phc-winner-argon2>
+License: BSD-3-clause and CC0-1.0
+
+Files:
+ src/jit_compiler_a64.cpp
+ src/jit_compiler_a64.hpp
+ src/jit_compiler_a64_static.S
+ src/jit_compiler_a64_static.hpp
+Copyright:
+  2018-2019, tevador <tevador@gmail.com>
+  2019, SChernykh <https://github.com/SChernykh>
+License: BSD-3-clause
+
+Files: CMakeLists.txt
+Copyright:
+  2019, The Monero Project
+License: BSD-3-clause
+
+Files: src/tests/affinity.hpp
+Copyright:
+  2019, jtgrassie
+License: BSD-3-clause
+
+Files: src/tests/affinity.cpp
+Copyright:
+  2019, jtgrassie
+  2019, tevador <tevador@gmail.com>
+License: BSD-3-clause
+
+Files: vcxproj/h2inc.ps1
+Copyright: .NET Foundation and Contributors
+License: Expat
+
+Files: debian/*
+Copyright:
+  2016-2019, Jonas Smedegaard <dr@jones.dk>
+License-Grant:
+ This program is free software:
+ you can redistribute it and/or modify it
+ under the terms of the GNU General Public License as published
+ by the Free Software Foundation,
+ either version 3 of the License, or (at your option) any later version.
+License: GPL-3+
+
+License: BSD-3-clause
+ Redistribution and use in source and binary forms,
+ with or without modification, are permitted
+ provided that the following conditions are met:
+  1. Redistributions of source code must retain
+     the above copyright notice, this list of conditions
+     and the following disclaimer.
+  2. Redistributions in binary form must reproduce
+     the above copyright notice, this list of conditions
+     and the following disclaimer
+     in the documentation and/or other materials
+     provided with the distribution.
+  3. Neither the name of the copyright holder
+     nor the names of its contributors
+     may be used to endorse or promote
+     products derived from this software
+     without specific prior written permission.
+ .
+ THIS SOFTWARE IS PROVIDED
+ BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ AND ANY EXPRESS OR IMPLIED WARRANTIES,
+ INCLUDING, BUT NOT LIMITED TO,
+ THE IMPLIED WARRANTIES OF MERCHANTABILITY
+ AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY,
+ OR CONSEQUENTIAL DAMAGES
+ (INCLUDING, BUT NOT LIMITED TO,
+ PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ LOSS OF USE, DATA, OR PROFITS;
+ OR BUSINESS INTERRUPTION)
+ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE)
+ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+License: CC0-1.0
+License-Reference: /usr/share/common-licenses/CC0-1.0
+
+License: Expat
+ Permission is hereby granted, free of charge,
+ to any person obtaining a copy
+ of this software and associated documentation files (the "Software"),
+ to deal in the Software without restriction,
+ including without limitation the rights
+ to use, copy, modify, merge, publish, distribute,
+ sublicense, and/or sell copies of the Software,
+ and to permit persons to whom the Software is furnished to do so,
+ subject to the following conditions:
+ .
+ The above copyright notice and this permission notice
+ shall be included in all copies or substantial portions of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS",
+ WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ INCLUDING BUT NOT LIMITED TO
+ THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+ AND NONINFRINGEMENT.
+ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
+ FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ ARISING FROM, OUT OF OR IN CONNECTION WITH
+ THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+License: GPL-3+
+License-Reference: /usr/share/common-licenses/GPL-3
