@@ -38,6 +38,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <cstring>
 #include <limits>
 #include <cstring>
+#include <cassert>
 
 #include "common.hpp"
 #include "dataset.hpp"
@@ -91,6 +92,9 @@ namespace randomx {
 		context.flags = ARGON2_DEFAULT_FLAGS;
 		context.version = ARGON2_VERSION_NUMBER;
 
+		int inputsValid = randomx_argon2_validate_inputs(&context);
+		assert(inputsValid == ARGON2_OK);
+
 		/* 2. Align memory size */
 		/* Minimum memory_blocks = 8L blocks, where L is the number of lanes */
 		memory_blocks = context.m_cost;
@@ -107,6 +111,7 @@ namespace randomx {
 		instance.threads = context.threads;
 		instance.type = Argon2_d;
 		instance.memory = (block*)cache->memory;
+		instance.impl = cache->argonImpl;
 
 		if (instance.threads > instance.lanes) {
 			instance.threads = instance.lanes;
@@ -115,9 +120,9 @@ namespace randomx {
 		/* 3. Initialization: Hashing inputs, allocating memory, filling first
 		 * blocks
 		 */
-		rxa2_argon_initialize(&instance, &context);
+		randomx_argon2_initialize(&instance, &context);
 
-		rxa2_fill_memory_blocks(&instance);
+		randomx_argon2_fill_memory_blocks(&instance);
 
 		cache->reciprocalCache.clear();
 		randomx::Blake2Generator gen(key, keySize);
@@ -136,8 +141,10 @@ namespace randomx {
 
 	void initCacheCompile(randomx_cache* cache, const void* key, size_t keySize) {
 		initCache(cache, key, keySize);
+		cache->jit->enableWriting();
 		cache->jit->generateSuperscalarHash(cache->programs, cache->reciprocalCache);
 		cache->jit->generateDatasetInitCode();
+		cache->jit->enableExecution();
 	}
 
 	constexpr uint64_t superscalarMul0 = 6364136223846793005ULL;

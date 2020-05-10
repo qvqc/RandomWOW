@@ -41,6 +41,36 @@ inline void outputHex(std::ostream& os, const char* data, int length) {
 	}
 }
 
+char parseNibble(char hex) {
+	hex &= ~0x20;
+	if (hex & 0x40) {
+		hex -= 'A' - 10;
+	}
+	else {
+		hex &= 0xf;
+	}
+	return hex;
+}
+
+void hex2bin(const char *in, int length, char *out) {
+	for (int i = 0; i < length; i += 2) {
+		char nibble1 = parseNibble(*in++);
+		char nibble2 = parseNibble(*in++);
+		*out++ = nibble1 << 4 | nibble2;
+	}
+}
+
+constexpr bool stringsEqual(char const * a, char const * b) {
+	return *a == *b && (*a == '\0' || stringsEqual(a + 1, b + 1));
+}
+
+template<size_t N>
+bool equalsHex(const void* hash, const char (&hex)[N]) {
+	char reference[N / 2];
+	hex2bin(hex, N - 1, reference);
+	return memcmp(hash, reference, sizeof(reference)) == 0;
+}
+
 inline void dump(const char* buffer, uint64_t count, const char* name) {
 	std::ofstream fout(name, std::ios::out | std::ios::binary);
 	fout.write(buffer, count);
@@ -60,6 +90,15 @@ inline void readOption(const char* option, int argc, char** argv, bool& out) {
 inline void readIntOption(const char* option, int argc, char** argv, int& out, int defaultValue) {
 	for (int i = 0; i < argc - 1; ++i) {
 		if (strcmp(argv[i], option) == 0 && (out = atoi(argv[i + 1])) > 0) {
+			return;
+		}
+	}
+	out = defaultValue;
+}
+
+inline void readUInt64Option(const char* option, int argc, char** argv, uint64_t& out, uint64_t defaultValue) {
+	for (int i = 0; i < argc - 1; ++i) {
+		if (strcmp(argv[i], option) == 0 && (out = std::strtoull(argv[i + 1], NULL, 0)) > 0) {
 			return;
 		}
 	}

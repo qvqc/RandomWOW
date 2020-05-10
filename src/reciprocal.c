@@ -26,6 +26,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <assert.h>
 #include "reciprocal.h"
 
 /*
@@ -44,6 +45,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
 uint64_t randomx_reciprocal(uint64_t divisor) {
+
+	assert(divisor != 0);
 
 	const uint64_t p2exp63 = 1ULL << 63;
 
@@ -67,3 +70,11 @@ uint64_t randomx_reciprocal(uint64_t divisor) {
 
 	return quotient;
 }
+
+#if !RANDOMX_HAVE_FAST_RECIPROCAL
+
+uint64_t randomx_reciprocal_fast(uint64_t divisor) {
+	return randomx_reciprocal(divisor);
+}
+
+#endif

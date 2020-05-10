@@ -37,6 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "superscalar.hpp"
 #include "intrin_portable.h"
 #include "reciprocal.h"
+#include "common.hpp"
 
 namespace randomx {
 
@@ -334,7 +335,7 @@ namespace randomx {
 			return false;
 
 		if (availableRegisters.size() > 1) {
-			index = gen.getInt32() % availableRegisters.size();
+			index = gen.getUInt32() % availableRegisters.size();
 		}
 		else {
 			index = 0;
@@ -447,7 +448,7 @@ namespace randomx {
 			case SuperscalarInstructionType::IADD_C8:
 			case SuperscalarInstructionType::IADD_C9: {
 				mod_ = 0;
-				imm32_ = gen.getInt32();
+				imm32_ = gen.getUInt32();
 				opGroup_ = SuperscalarInstructionType::IADD_C7;
 				opGroupPar_ = -1;
 			} break;
@@ -456,7 +457,7 @@ namespace randomx {
 			case SuperscalarInstructionType::IXOR_C8:
 			case SuperscalarInstructionType::IXOR_C9: {
 				mod_ = 0;
-				imm32_ = gen.getInt32();
+				imm32_ = gen.getUInt32();
 				opGroup_ = SuperscalarInstructionType::IXOR_C7;
 				opGroupPar_ = -1;
 			} break;
@@ -466,7 +467,7 @@ namespace randomx {
 				mod_ = 0;
 				imm32_ = 0;
 				opGroup_ = SuperscalarInstructionType::IMULH_R;
-				opGroupPar_ = gen.getInt32();
+				opGroupPar_ = gen.getUInt32();
 			} break;
 
 			case SuperscalarInstructionType::ISMULH_R: {
@@ -474,14 +475,14 @@ namespace randomx {
 				mod_ = 0;
 				imm32_ = 0;
 				opGroup_ = SuperscalarInstructionType::ISMULH_R;
-				opGroupPar_ = gen.getInt32();
+				opGroupPar_ = gen.getUInt32();
 			} break;
 
 			case SuperscalarInstructionType::IMUL_RCP: {
 				mod_ = 0;
 				do {
-					imm32_ = gen.getInt32();
-				} while ((imm32_ & (imm32_ - 1)) == 0);
+					imm32_ = gen.getUInt32();
+				} while (isZeroOrPowerOf2(imm32_));
 				opGroup_ = SuperscalarInstructionType::IMUL_RCP;
 				opGroupPar_ = -1;
 			} break;
@@ -636,7 +637,7 @@ namespace randomx {
 				int cycle1 = scheduleUop<false>(mop.getUop1(), portBusy, cycle);
 				int cycle2 = scheduleUop<false>(mop.getUop2(), portBusy, cycle);
 
-				if (cycle1 == cycle2) {
+				if (cycle1 >= 0 && cycle1 == cycle2) {
 					if (commit) {
 						scheduleUop<true>(mop.getUop1(), portBusy, cycle1);
 						scheduleUop<true>(mop.getUop2(), portBusy, cycle2);
@@ -759,6 +760,12 @@ namespace randomx {
 
 				//recalculate when the instruction can be scheduled for execution based on operand availability
 				scheduleCycle = scheduleMop<true>(mop, portBusy, scheduleCycle, scheduleCycle);
+
+				if (scheduleCycle < 0) {
+					if (trace) std::cout << "Unable to map operation '" << mop.getName() << "' to execution port (cycle " << scheduleCycle << ")" << std::endl;
+					portsSaturated = true;
+					break;
+				}
 
 				//calculate when the result will be ready
 				depCycle = scheduleCycle + mop.getLatency();
